@@ -42,6 +42,7 @@ module "key_instance" {
 module "server" {
   source                 = "../aws_instance"
   ami                    = data.aws_ami.latest_amazon_linux.id
+  name                   = "jenkins"
   env                    = var.env
   subnet_id              = var.subnet_id
   instance_type          = "t2.micro"
@@ -49,7 +50,7 @@ module "server" {
   key_name               = module.key_instance.name_key
   vpc_security_group_ids = [module.security_group.security_group_id]
   user_data              = data.template_file.user_data.rendered
-  iam_instance_profile   = data.template_file.policy_bastion.rendered
+  iam_instance_profile   = data.template_file.policy_jenkins.rendered
   common_tags            = var.common_tags
 }
 
